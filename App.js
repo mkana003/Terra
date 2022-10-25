@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useState, useContext} from 'react'
+import { useColorScheme } from 'react-native';
+import Start from "./src/Starts";
+import { Provider } from 'react-redux'
+//Context
+import ThemeContext from './src/context/ThemeContext';
+//Redux-Saga
+import store from './src/redux/store'
+//Theme
+import { lightTheme, darkTheme } from './src/styles/colors';
 
 export default function App() {
+  const colorScheme = useColorScheme();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <ThemeContext.Provider value={colorScheme == 'light' ? lightTheme : darkTheme }>
+        <Start/>
+      </ThemeContext.Provider>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
